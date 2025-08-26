@@ -70,11 +70,11 @@ class _AliceCallDetailsScreenState extends State<AliceCallDetailsScreen>
           children: [
             if (isFloatingActionShown) ...[
               FloatingActionButton(
-                heroTag: 'copy_id',
-                backgroundColor: AliceConstants.grey,
-                onPressed: _copyErrorId,
+                heroTag: 'copy_curl',
+                backgroundColor: AliceConstants.red,
+                onPressed: _copyCurl,
                 child: _FloatingContent(
-                  title: 'Error ID',
+                  title: 'cURL',
                 ),
               ),
               SizedBox(height: 12),
@@ -182,23 +182,32 @@ class _AliceCallDetailsScreenState extends State<AliceCallDetailsScreen>
     }
   }
 
-  Future<void> _copyErrorId() async {
-    final errorId = await AliceSaveHelper.getErrorId(call);
+  Future<void> _copyCurl() async {
     late final SnackBar snackBar;
-    if (errorId != null) {
-      await Clipboard.setData(ClipboardData(text: errorId));
 
+    try {
+      final curlCommand = call.getCurlCommand();
+
+      if (curlCommand.isNotEmpty) {
+        await Clipboard.setData(ClipboardData(text: curlCommand));
+        snackBar = SnackBar(
+          content: Text('cURL command copied to clipboard'),
+          backgroundColor: Colors.green,
+        );
+      } else {
+        snackBar = SnackBar(
+          content: Text('No cURL command available'),
+          backgroundColor: Colors.orange,
+        );
+      }
+    } catch (exception) {
       snackBar = SnackBar(
-        content: Text('Error ID copied to clipboard'),
-        backgroundColor: Colors.green,
-      );
-    } else {
-      snackBar = SnackBar(
-        content: Text('Failed to copy error ID'),
+        content: Text('Failed to copy cURL command'),
         backgroundColor: Colors.red,
       );
+    } finally {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Future<void> _copyResponseOnly() async {
