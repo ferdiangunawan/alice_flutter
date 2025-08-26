@@ -1,6 +1,6 @@
 name: alice_lightweight
 description: Lightweight Alice version. Removed additional dependencies except dio.
-version: 3.4.3
+version: 4.0.1
 homepage: https://github.com/jhomlala/alice
 
 environment:
@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.1.0
-  dio: ^5.3.3
-  rxdart: ^0.27.7
+  dio: 5.8.0+1
+  rxdart: 0.28.0
   share_plus: ^7.1.0
   path_provider: ^2.1.1
