@@ -1,6 +1,6 @@
 name: alice_lightweight
 description: Lightweight Alice version. Removed additional dependencies except dio.
-version: 4.0.1
+version: 4.0.2
 homepage: https://github.com/jhomlala/alice
 
 environment:
